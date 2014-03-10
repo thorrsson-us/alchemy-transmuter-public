@@ -1,0 +1,77 @@
+#!/bin/bash
+
+HOSTNAME=<%= opts['hostname'] %>
+PORT=<%= opts['port'] %>
+AUTH="<%= opts['username'] %>: <%= opts['password'] %>"
+
+LLDP_OUTPUT=/tmp/lldp.xml
+LSHW_OUTPUT=/tmp/lshw.xml
+
+find_host()
+{
+  ipaddr=`host $1 | grep "has address" | awk '{print $4}'`
+  default_route=`ip route show | grep 'default via' | awk '{print $3}'`
+  vlan_ip="`echo $default_route | cut -d . -f 1-3`.`echo $ipaddr | cut -d . -f 4`"
+}
+
+generate_lshw()
+{
+  lshw -xml > $LSHW_OUTPUT
+}
+
+generate_lldp()
+{
+  # Block on tcpdump finding the packet, then generate xml - seems to increase effectiveness
+  tcpdump -i eth0 -s 1500 -XX -c 1 'ether proto 0x88cc'
+  lldpctl -f xml > $LLDP_OUTPUT
+}
+
+find_sku()
+{
+  system_vendor=`dmidecode -s system-manufacturer`
+  system_serial=`dmidecode -s system-serial-number | sed "s|\.||g" | tr -d ' \t\n\r\f'`
+  vendor=`dmidecode -s baseboard-manufacturer`
+  serial=`dmidecode -s baseboard-serial-number | sed "s|\.||g" | tr -d ' \t\n\r\f'`
+
+  if [ -z "$vendor" ];then
+    vendor=$system_vendor
+  fi
+
+  if [ -z "$serial" ];then
+    serial=$system_serial
+  fi
+
+  case $vendor in
+    "Dell Inc.")
+      SKU="DEL"
+      ;;
+    "Supermicro")
+      SKU="SPM"
+      ;;
+    *)
+      SKU="UKN" # unknown manufacturer
+      ;;
+  esac
+  
+  SKU="$SKU-$serial"
+  echo -e "\t$SKU"
+}
+
+submit_intake()
+{
+
+  generate_lshw
+  generate_lldp
+  find_sku
+
+  find_host $HOSTNAME
+  host="$vlan_ip:$PORT"
+
+
+  curl --basic -u $AUTH \
+    --data-urlencode "lldp@$LLDP_OUTPUT" \
+    --data-urlencode "lshw@$LSHW_OUTPUT" \
+    http://$HOST/api/asset/$SKU
+}
+
+submit_intake

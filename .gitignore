@@ -1,0 +1,6 @@
+.swp
+*.swp
+.swo
+*.swo
+development.db
+config/secrets.yml

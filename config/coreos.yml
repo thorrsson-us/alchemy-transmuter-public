@@ -1,0 +1,9 @@
+coreos:
+  dns:
+  - 8.8.8.8
+  btrfs: /dev/sda
+  nodes:
+  - core1.chi.shopify.com
+  - core2.chi.shopify.com
+  - core3.chi.shopify.com
+  - core4.chi.shopify.com

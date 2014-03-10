@@ -1,0 +1,13 @@
+#!ipxe
+set boot-url http://${dhcp-server}/boot
+
+set uri-params  mac=${mac}
+set uri-params  ${uri-params}&serial=${serial}
+set uri-params  ${uri-params}&product=${product}
+set uri-params  ${uri-params}&manufacturer=${manufacturer}
+set uri-params  ${uri-params}&board-serial=${board-serial}
+set uri-params  ${uri-params}&board-product=${board-product}
+set uri-params  ${uri-params}&dhcp-server=${dhcp-server}
+
+set boot-uri ${boot-url}?${uri-params}
+chain --replace --autofree ${boot-uri}? ||
