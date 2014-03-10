@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: IntakeSpell
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!IntakeSpell.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (I)</a> &raquo;
+    
+    
+    <span class="title">IntakeSpell</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: IntakeSpell
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Spell.html" title="Spell (class)">Spell</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Spell.html" title="Spell (class)">Spell</a></span></li>
+          
+            <li class="next">IntakeSpell</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">spells/intake/intake.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Spell to perform server intake</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="WAIT_BOOT-classvariable" class="">@@WAIT_BOOT =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="BOOTED-classvariable" class="">@@BOOTED =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="WAIT_DATA-classvariable" class="">@@WAIT_DATA =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>waiting for server to boot server is booted waiting for server to send
+intake data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>4</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cast-instance_method" title="#cast (instance method)">- (Object) <strong>cast</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The run method initializes the state, and handles state transitioning.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#notify-instance_method" title="#notify (instance method)">- (Object) <strong>notify</strong>(message) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Allows for servers being transmuted to communicate with the spell about
+their progress.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#respond-instance_method" title="#respond (instance method)">- (Object) <strong>respond</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Respond when receiving a message, can vary based on state.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Spell.html" title="Spell (class)">Spell</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Spell.html#addFrontend-instance_method" title="Spell#addFrontend (method)">#addFrontend</a></span>, <span class='object_link'><a href="Spell.html#cleanup-instance_method" title="Spell#cleanup (method)">#cleanup</a></span>, <span class='object_link'><a href="Spell.html#getCollins-class_method" title="Spell.getCollins (method)">getCollins</a></span>, <span class='object_link'><a href="Spell.html#getState-instance_method" title="Spell#getState (method)">#getState</a></span>, <span class='object_link'><a href="Spell.html#updateState-instance_method" title="Spell#updateState (method)">#updateState</a></span>, <span class='object_link'><a href="Spell.html#updateTimeActive-instance_method" title="Spell#updateTimeActive (method)">#updateTimeActive</a></span></p>
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="cast-instance_method">
+  
+    - (<tt>Object</tt>) <strong>cast</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The run method initializes the state, and handles state transitioning</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'spells/intake/intake.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cast'>cast</span>
+  <span class='kw'>if</span> <span class='ivar'>@state</span> <span class='op'>==</span> <span class='const'>STARTED</span>
+      <span class='comment'># Create the asset
+</span>      <span class='ivar'>@collins</span><span class='period'>.</span><span class='id identifier rubyid_createIfNotExists'>createIfNotExists</span><span class='lparen'>(</span><span class='ivar'>@sku</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_updateState'>updateState</span><span class='lparen'>(</span> <span class='cvar'>@@WAIT_BOOT</span> <span class='rparen'>)</span>
+      <span class='ivar'>@collins</span><span class='period'>.</span><span class='id identifier rubyid_updateLog'>updateLog</span><span class='lparen'>(</span><span class='ivar'>@sku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Waiting for asset to boot</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="notify-instance_method">
+  
+    - (<tt>Object</tt>) <strong>notify</strong>(message) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Allows for servers being transmuted to communicate with the spell about
+their progress</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The message to send to the spell</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'spells/intake/intake.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_notify'>notify</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Got message </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_message'>message</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>booted</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Server booted</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_updateState'>updateState</span><span class='lparen'>(</span> <span class='cvar'>@@BOOTED</span> <span class='rparen'>)</span>
+      <span class='ivar'>@collins</span><span class='period'>.</span><span class='id identifier rubyid_updateLog'>updateLog</span><span class='lparen'>(</span><span class='ivar'>@sku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Asset booted, collecting intake data</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>data_done</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Data updated</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_updateState'>updateState</span><span class='lparen'>(</span> <span class='cvar'>@@BURNIN_START</span> <span class='rparen'>)</span> 
+      <span class='ivar'>@collins</span><span class='period'>.</span><span class='id identifier rubyid_updateLog'>updateLog</span><span class='lparen'>(</span><span class='ivar'>@sku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Intake data received</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="respond-instance_method">
+  
+    - (<tt>Object</tt>) <strong>respond</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Respond when receiving a message, can vary based on state</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The options passed via http</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'spells/intake/intake.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_respond'>respond</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Responding in state </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>case</span> <span class='ivar'>@state</span>
+    <span class='kw'>when</span> <span class='cvar'>@@BOOTED</span>
+      <span class='id identifier rubyid_updateState'>updateState</span><span class='lparen'>(</span> <span class='cvar'>@@WAIT_DATA</span> <span class='rparen'>)</span>
+      <span class='comment'>#set options for intake.erb template to render
+</span>      <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:template</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='symbol'>:intake</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Jun 21 12:19:36 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.1.0).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,12 @@
+.swp
+*.swp
+.swo
+*.swo
+development.db
+config/secrets.yml
+config/collins.yml
+private.yml
+.yardoc
+spells.bak
+TODO.md
+_site

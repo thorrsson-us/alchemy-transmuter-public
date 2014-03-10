@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'>
+<pre class="code ruby"><code class="ruby"><span class='comment'>############################ 
+</span><span class='comment'>#           #  #           #
+</span> <span class='comment'>#          #  #          #
+</span>  <span class='comment'>#        #    #        #
+</span>  <span class='comment'>#       ##    ##       #
+</span>   <span class='comment'>#      #      #      #
+</span>   <span class='comment'>#     #        #     #
+</span>    <span class='comment'>#    #        #    #
+</span>    <span class='comment'>##  #          #  ##
+</span>     <span class='comment'># ##          ## #
+</span>      <span class='comment'>##   Alchemy   ##
+</span>      <span class='comment'>#  Transmuter   #
+</span>      <span class='comment'>##             ##
+</span>     <span class='comment'># ##          ## #
+</span>    <span class='comment'>##  #          #  ##
+</span>    <span class='comment'>#    #        #    #
+</span>   <span class='comment'>#     #        #     #
+</span>   <span class='comment'>#      #      #      #
+</span>  <span class='comment'>#       ##    ##       #
+</span>  <span class='comment'>#        #    #        #
+</span> <span class='comment'>#          #  #          #
+</span><span class='comment'>#           #  #           #
+</span><span class='comment'>############################</span></code></pre>
+
+<h1 id="label-What+is+Transmuter%3F">What is Transmuter?</h1>
+
+<p>Alchemy Transmuter is a light-weight Sinatra app combined with event
+machine, that is designed to connect 4 major components:</p>
+<ul><li>
+<p>Collins Source Of Truth</p>
+</li><li>
+<p>Alchemy Linux</p>
+</li><li>
+<p>Alchemy Spells</p>
+</li><li>
+<p>iPXE</p>
+</li></ul>
+
+<p>As such, it&#39;s pretty closely coupled to these other projects.
+Transmuter is contacted by iPXE when a server boots via PXE. It will see
+what it knows about the server in Collins, then make a decision about what
+the server should do. Examples of such decisions might be:</p>
+<ul><li>
+<p>Already bootstrapped? Continue with BIOS boot</p>
+</li><li>
+<p>New hardware? Send Alchemy Linux, with Burnin and Bootstrapp spells, and
+tell Collins we&#39;ve got some fresh meat.</p>
+</li><li>
+<p>Collins knows about it, and has a specific job in mind? Send the spell for
+that job.</p>
+</li></ul>
+
+<p>Transmuter might be thought of as a lightweight version of Cobbler (from
+what I&#39;m told, but it&#39;s a pretty superficial comparison).
+Transmuter was inspired by “Phil” and “Visioner” from tumblr.</p>
+
+<h1 id="label-Technical+details">Technical details</h1>
+
+<h2 id="label-Architecture">Architecture</h2>
+
+<p>Transmuter listens on HTTP for requests from servers booting through iPXE.
+A few identifying details are passed to Transmuter, which it then uses to
+query Collins server through it&#39;s HTTP API. It then makes a decision
+about what to do with the server, and then consults it&#39;s Spellbook to
+send an appropriate iPXE configuration.</p>
+
+<p>If the spell involves booting Alchemy Linux, Alchemy linux will call home
+and tell Transmuter how it&#39;s doing once in a while (assuming the spell
+dispatched tells it to do so).</p>
+
+<h1 id="label-Preseed+nodes">Preseed nodes</h1>
+
+<p>Read up on the ubuntu <a
+href="https://help.ubuntu.com/14.04/installation-guide/example-preseed.txt">example
+preseeds</a></p>
+
+<h2 id="label-Ubuntu+12.10+%2B">Ubuntu 12.10 +</h2>
+
+<p>Bootstraping ubuntu preseeds later that 12.10 requires you specify a <a
+href="http://www.michaelm.info/blog/?p=1378">net-image</a>. This is not
+really documented anywhere, but if it was it wouldn&#39;t be ubuntu</p>
+
+<h2 id="label-Ubuntu+14.04">Ubuntu 14.04</h2>
+
+<p>There is a <a
+href="https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1274320">bug</a>
+in grub that requires quick boot be disabled on LVM installs</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Sat Jun 21 12:19:36 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.1.0).
+</div>
+
+  </body>
+</html>

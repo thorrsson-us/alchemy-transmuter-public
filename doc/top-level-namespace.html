@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Top Level Namespace
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!top-level-namespace.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo;
+    
+    
+    <span class="title">Top Level Namespace</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Top Level Namespace
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="AlchemySpell.html" title="AlchemySpell (class)">AlchemySpell</a></span>, <span class='object_link'><a href="Asset.html" title="Asset (class)">Asset</a></span>, <span class='object_link'><a href="Collins.html" title="Collins (class)">Collins</a></span>, <span class='object_link'><a href="CoreosSpell.html" title="CoreosSpell (class)">CoreosSpell</a></span>, <span class='object_link'><a href="IntakeSpell.html" title="IntakeSpell (class)">IntakeSpell</a></span>, <span class='object_link'><a href="Spell.html" title="Spell (class)">Spell</a></span>, <span class='object_link'><a href="SpellCaster.html" title="SpellCaster (class)">SpellCaster</a></span>, <span class='object_link'><a href="Transmuter.html" title="Transmuter (class)">Transmuter</a></span>, <span class='object_link'><a href="TransmuterHTTP.html" title="TransmuterHTTP (class)">TransmuterHTTP</a></span>, <span class='object_link'><a href="UbuntuSpell.html" title="UbuntuSpell (class)">UbuntuSpell</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="NOT_STARTED-constant" class="">NOT_STARTED =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>spell hasn&#39;t been casted yet</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='op'>-</span><span class='int'>1</span></pre></dd>
+      
+        <dt id="DONE-constant" class="">DONE =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>completed successfully</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="STARTED-constant" class="">STARTED =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>spell has been casted</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#compute_sku-instance_method" title="#compute_sku (instance method)">- (Object) <strong>compute_sku</strong>(vendor, serial, board_serial) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Compute skus using a simple algorithm.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="compute_sku-instance_method">
+  
+    - (<tt>Object</tt>) <strong>compute_sku</strong>(vendor, serial, board_serial) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Compute skus using a simple algorithm. Map manufacturer to 3 character
+manfacturer code. Append board serial if available, else system serial.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>vendor</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>manufacturor of the asset for which we should compute the SKU</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>serial</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>serial number of the chassis for the asset for which we should compute the
+SKU</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>board_serial</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>serial number of the motherboard for the asset for which we should compute
+the SKU</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/util.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_compute_sku'>compute_sku</span><span class='lparen'>(</span> <span class='id identifier rubyid_vendor'>vendor</span><span class='comma'>,</span> <span class='id identifier rubyid_serial'>serial</span><span class='comma'>,</span> <span class='id identifier rubyid_board_serial'>board_serial</span> <span class='rparen'>)</span>
+
+  <span class='comment'># Sanitize params 
+</span>  <span class='id identifier rubyid_strip_pattern'>strip_pattern</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[^-^:\p{Alnum}]</span><span class='regexp_end'>/</span></span>
+  <span class='id identifier rubyid_serial'>serial</span>        <span class='op'>=</span> <span class='id identifier rubyid_serial'>serial</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_strip_pattern'>strip_pattern</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_vendor'>vendor</span>        <span class='op'>=</span> <span class='id identifier rubyid_vendor'>vendor</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_strip_pattern'>strip_pattern</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_board_serial'>board_serial</span>  <span class='op'>=</span> <span class='id identifier rubyid_board_serial'>board_serial</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_strip_pattern'>strip_pattern</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='kw'>not</span> <span class='id identifier rubyid_board_serial'>board_serial</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> 
+    <span class='id identifier rubyid_serial'>serial</span> <span class='op'>=</span> <span class='id identifier rubyid_board_serial'>board_serial</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>case</span> <span class='id identifier rubyid_vendor'>vendor</span> 
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dell Inc.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_sku'>sku</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DEL</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Supermicro</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_sku'>sku</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SPM</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_sku'>sku</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UKN</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># unknown manufacturer
+</span>  <span class='kw'>end</span>
+ 
+  <span class='id identifier rubyid_sku'>sku</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sku'>sku</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_serial'>serial</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_sku'>sku</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Jun 21 12:19:36 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.1.0).
+</div>
+
+  </body>
+</html>
