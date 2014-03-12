@@ -1,0 +1,4 @@
+menu_txt:   "Boot Alchemy Linux"
+menu_sym:   alchemy
+menu_key:   a
+menu_class: util

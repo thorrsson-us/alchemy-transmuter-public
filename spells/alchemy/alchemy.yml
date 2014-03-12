@@ -1,0 +1,2 @@
+alchemy: 
+  kernel_params: net real_init=/sbin/init

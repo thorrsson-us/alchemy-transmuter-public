@@ -1,0 +1,87 @@
+#!ipxe
+
+
+# Some menu defaults
+set menu-timeout <%= opts['menu']['menu_timeout'] %>
+set submenu-timeout ${menu-timeout}
+
+# Allow overriding the menu default for automation
+<% if opts['menu'].has_key? 'menu_default' %>
+set menu-default  <%= opts['menu']['menu_default']  %>
+<% end %>
+
+<% if opts['menu'].has_key? 'submenu_default' %>
+set submenu-default <%= opts['menu']['submenu_default'] %>
+<% end %>
+
+isset ${menu-default} || set menu-default exit
+
+# Figure out if client is 64-bit capable
+cpuid --ext 29 && set arch x64 || set arch x86
+cpuid --ext 29 && set archl amd64 || set archl i386
+
+###################### MAIN MENU ####################################
+
+
+# This menu should be dynamically generated from spells, probably just make a metadata format
+
+:start
+menu iPXE boot menu for ${initiator-iqn}
+item --gap --             ------------------------- OS Installation --------------------------------
+<% spells.each do | spell, data |  %>
+<% if data.has_key? 'menu_class' and data['menu_class'] == 'os' %>
+item --key <%= data['menu_key'] %> <%= data['menu_sym'] %> <%= data['menu_txt'] %>
+<% end %>
+<% end %>
+item --gap --             ------------------------- Tools and utilities ----------------------------
+<% spells.each do | spell, data |  %>
+<% if data.has_key? 'menu_class' and data['menu_class'] == 'util' %>
+item --key <%= data['menu_key'] %> <%= data['menu_sym'] %> <%= data['menu_txt'] %>
+<% end %>
+<% end %>
+item --gap --             ------------------------- Advanced opts -------------------------------
+item --key c config       Configure settings
+item shell                Drop to iPXE shell
+item reboot               Reboot computer
+item
+item --key x exit         Exit iPXE and continue BIOS boot
+choose --timeout ${menu-timeout} --default ${menu-default} selected || goto cancel
+set menu-timeout 0
+goto ${selected}
+
+<% spells.each do | spell, data |  %>
+<% if data.has_key? 'menu_class' %>
+
+<%= partial(:"#{spell}", :opts => opts) %>
+<% end %>
+<% end %>
+
+:cancel
+echo You cancelled the menu, dropping you to a shell
+
+:shell
+echo Type 'exit' to get the back to the menu
+shell
+set menu-timeout 0
+set submenu-timeout 0
+goto start
+
+:failed
+echo Booting failed, dropping to shell
+goto shell
+
+:reboot
+reboot
+
+:exit
+exit
+
+:config
+config
+goto start
+
+:back
+set submenu-timeout 0
+clear submenu-default
+goto start
+
