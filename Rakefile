@@ -17,6 +17,13 @@ namespace :docs do
 
 end
 
+namespace :demo do
+desc "Setup for demo"
+  task :setup do 
+    sh "cp config/collins.yml.example config/collins.yml"
+  end
+end
+
 desc "Print a detailed help with usage examples"
 task :help do
 

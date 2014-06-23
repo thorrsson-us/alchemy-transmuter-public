@@ -110,42 +110,43 @@ class TransmuterHTTP < Sinatra::Base
     sku = compute_sku(params['manufacturer'], params['serial'], params['board-serial'])
     opts['sku'] = sku
 
-   # begin 
-   #   puts "Asking collins"
-   #   asset = @collins.getAsset(sku)
-   #   puts "back from collins"
-   # rescue
-   #   puts "Couldn't connect to collins :("
-   #   halt(500,"Can't connect to collins") 
-   # end
+    begin 
+      puts "Asking collins"
+      asset = @collins.getAsset(sku)
+      connect = true
+      puts "back from collins"
+    rescue
+      asset = nil
+      connect = false
+      puts "Couldn't connect to collins :("
+    end
 
-   # if asset.nil?
+    if asset.nil?
+        if connect
+          puts "Asset #{sku} is unknown, we'll make it"
+          intake = IntakeSpell.new(
+              :sku => sku
+          )
+          intake.save
 
-   #     puts "Asset #{sku} is unknown, we'll make it"
-   #     intake = IntakeSpell.new(
-   #         :sku => sku
-   #     )
-   #     intake.save
+          # Modify the options hash to set the default options in the menu
+          opts['menu_default'] = "alchemy"
+          opts['callback'] = "/spell/notify?sku=#{sku}&message=booted"
+        end
+    else
+        puts "Asset #{sku} is known"
+        puts asset
 
-   #     # Modify the options hash to set the default options in the menu
-   #     opts['menu_default'] = "alchemy"
-   #     opts['callback'] = "/spell/notify?sku=#{sku}&message=booted"
+        # Check if there is a spell taking care of this
+        running = Asset.first(:sku => sku) 
 
-   # else
-   #     puts "Asset #{sku} is known"
-   #     puts asset
-
-   #     # Check if there is a spell taking care of this
-   #     running = Asset.first(:sku => sku) 
-
-   #     if not running.nil?
-   #       # If so, let it decide what it should do and potentially override boot options
-   #       options = running.respond(opts)
-   #     end
-   # end
+        if not running.nil?
+          # If so, let it decide what it should do and potentially override boot options
+          opts = running.respond(opts)
+        end
+    end
 
     # Render the iPXE boot menu
-    puts opts['coreos']['builds']
     body {erb :menu, :locals => { :opts => opts, :spells => $menu_spells }}
   end
 
