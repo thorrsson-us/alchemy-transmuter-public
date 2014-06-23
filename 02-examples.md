@@ -22,6 +22,7 @@ Required:
 + cURL
 
 Optional:
+
 + nginx (for production)
 + runit (to run as service)
 + capistrano (to deploy)
