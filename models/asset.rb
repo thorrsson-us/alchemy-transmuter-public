@@ -1,6 +1,7 @@
 require 'json'
 require 'spell'
 
+# Representation and model of an asset
 class Asset
   include DataMapper::Resource
   property :id,          Serial
@@ -9,12 +10,15 @@ class Asset
   property :active,      Integer, :required => true, :default => -1
 
 
+  # Load spells for this asset into memory from database
   def loadSpells
     @spells = JSON.load(self.spell_queue)
   end
 
+
+  # Try to get the active spell
+  # @return [Spell] current active spell for this asset, or nil if none active.
   def getSpell
-    # Try to get the active spell
     old_active = self.active
     if self.active > -1
       spell = Spell.get(self.active)
@@ -44,6 +48,9 @@ class Asset
     return spell
   end
 
+
+  # Add a spell to this asset's queue
+  # @param [Spell] spell the spell to cast on this asset
   def pushSpell(spell)
     loadSpells
     @spells.push(spell.id)
@@ -54,6 +61,8 @@ class Asset
     
   end
 
+  # Grab the next spell to run for this asset.
+  # @return [Spell] the next spell to run for this asset, or nil if there is none.
   def shiftSpell
     loadSpells
     next_spell = @spells.shift

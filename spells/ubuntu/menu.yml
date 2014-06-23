@@ -1,0 +1,4 @@
+menu_txt:   "Select preseeds for ubuntu installer..."
+menu_sym:   menu-ubuntu
+menu_key:   u
+menu_class: os

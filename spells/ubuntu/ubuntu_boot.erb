@@ -1,0 +1,23 @@
+#!ipxe
+echo Starting Ubuntu <%= opts['version'] %> local installer for ${initiator-iqn}
+set base-url http://${dhcp-server}/ubuntu/<%= opts['name'] %>
+kernel ${base-url}/install/netboot/ubuntu-installer/${archl}/linux
+initrd ${base-url}/install/netboot/ubuntu-installer/${archl}/initrd.gz
+# Note: https://bugs.launchpad.net/ubuntu/+source/netcfg/+bug/56679 fixes bug with auto selecting interfaces
+imgargs linux \
+  debian-installer/locale=en_US.utf8 \
+  console-setup/ask_detect=false \
+  keyboard-configuration/layoutcode=us \
+  url=http://${dhcp-server}/spell/render/ubuntu/preseed?dhcp-server=${dhcp-server}&sku=<%= sku %>&codename=<%= opts['name'] %>&swapsize=<%= opts['swapsize']%> \
+  live-installer/net-image=${base-url}/install/filesystem.squashfs \
+  netcfg/get_hostname=<%= sku %> \
+<% unless opts.has_key? 'manual_interface' and opts['manual_interface'] %>
+  netcfg/choose_interface=auto \
+  BOOTIF=<%= opts['mac'] %> \
+<% end %>
+  net.ifnames=1 biosdevname=0 \
+  mirror/http/hostname=${dhcp-server} mirror/http/directory=/ubuntu/<%= opts['name' ]%> \
+  <%= opts['preseed_opts'].map{|k,v| "#{k}=#{v}"}.join(' ') %>  \
+  -- <%= opts['kernel_params'] %>
+boot || goto failed
+goto start

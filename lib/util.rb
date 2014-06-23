@@ -1,15 +1,16 @@
 # Compute skus using a simple algorithm.
-#    Map manufacturer to 3 character manfacturer code.
-#    Append board serial if available, else system serial.
-def compute_sku( params )
+# Map manufacturer to 3 character manfacturer code.
+# Append board serial if available, else system serial.
+# @param [String] vendor - manufacturor of the asset for which we should compute the SKU
+# @param [String] serial - serial number of the chassis for the asset for which we should compute the SKU
+# @param [String] board_serial - serial number of the motherboard for the asset for which we should compute the SKU
+def compute_sku( vendor, serial, board_serial )
 
+  # Sanitize params 
   strip_pattern = /[^-^:\p{Alnum}]/
-  mac           = params["mac"].gsub(strip_pattern,'')
-  serial        = params["serial"].gsub(strip_pattern,'')
-  product       = params["product"].gsub(strip_pattern,'')
-  vendor        = params["manufacturer"].gsub(strip_pattern,'')
-  board_serial  = params["board-serial"].gsub(strip_pattern,'')
-  board_product = params["board-product"].gsub(strip_pattern,'')
+  serial        = serial.gsub(strip_pattern,'')
+  vendor        = vendor.gsub(strip_pattern,'')
+  board_serial  = board_serial.gsub(strip_pattern,'')
 
   if not board_serial.empty? 
     serial = board_serial
@@ -27,5 +28,3 @@ def compute_sku( params )
   sku="#{sku}-#{serial}"
   return sku
 end
-
-

@@ -1,0 +1,19 @@
+:menu-coreos
+menu CoreOS Channels
+<% if opts.has_key? 'coreos' and opts['coreos'].has_key? 'builds' %>
+<% opts['coreos']['builds'].each do | build, data | %>
+    item  <%= build %> <%= data['label'] %>
+<% end %>
+<% end %>
+item
+item --key 0x08 back      Back to top menu...
+iseq ${menu-default} menu-coreos && isset ${submenu-default} && goto menu-coreos-timed ||
+choose selected && goto ${selected} || goto start
+
+<% if opts.has_key? 'coreos' and opts['coreos'].has_key? 'builds' %>
+<% opts['coreos']['builds'].each do | build, _ | %>
+
+:<%= build %>
+chain --replace --autofree  http://${dhcp-server}/spell/render/coreos/boot?sku=<%= opts['sku'] %>&build=<%= build %>
+<% end %>
+<% end %>

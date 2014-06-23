@@ -1,0 +1,24 @@
+coreos:
+  dns:
+   - 172.16.2.150
+#  - 8.8.8.8
+  btrfs: /dev/sda
+  nodes:
+    - core1.chi.shopify.com
+    - core2.chi.shopify.com
+    - core3.chi.shopify.com
+    - core4.chi.shopify.com
+  payload_directory: "/var/lib/borg/slave-keys"
+  builds:
+    upstream_364:
+      label:    "Boot Upstream build 364"
+      base_url: "http://alpha.release.core-os.net/amd64-usr/346.0.0/"
+    coreos_alpha:
+      label:    "Boot Internal Alpha Channel"
+      base_url: "http://${dhcp-server}/coreos/alpha"
+    coreos_beta:
+      label:    "Boot Internal Beta Channel"
+      base_url: "http://${dhcp-server}/coreos/beta"
+    coreos_test:
+      label:    "Boot Internal Test Channel"
+      base_url: "http://${dhcp-server}/coreos/test"

@@ -1,0 +1,127 @@
+#cloud-config
+
+# template will be served from collins.shopify.com with nginx in front providing
+# authentication
+coreos:
+  units:
+    - name: format-ephemeral.service
+      command: start
+      content: |
+        [Unit]
+        Description=Formats the ephemeral drive
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/sbin/wipefs -a -f <%= opts['btrfs_drive'] %>
+        ExecStart=/usr/sbin/mkfs.btrfs -f <%= opts['btrfs_drive'] %>
+    - name: var-lib-docker.mount
+      command: start
+      content: |
+        [Unit]
+        Description=Mount ephemeral to /var/lib/docker
+        Requires=format-ephemeral.service
+        Before=docker.service
+        [Mount]
+        What=<%= opts['btrfs_drive'] %>
+        Where=/var/lib/docker
+        Type=btrfs
+    - name: etcd.service
+      mask: true
+    - name: fleet.service
+      command: start
+    - name: docker-tcp.socket
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Docker Socket for the API
+
+        [Socket]
+        ListenStream=4243
+        Service=docker.service
+        BindIPv6Only=both
+
+        [Install]
+        WantedBy=sockets.target
+    - name: rdns-hostname.service
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Sets hostname via reverse-dns lookup
+        Requires=network-online.target
+        After=network-online.target
+
+        [Service]
+        EnvironmentFile=/etc/environment
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/bin/bash -c "/usr/bin/hostnamectl set-hostname `getent hosts ${COREOS_PUBLIC_IPV4} | awk '{print $2}'`"
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: borgboot.service
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Borg bootstrapping
+        Requires=network-online.target docker.service
+        After=network-online.target docker.service
+
+        [Service]
+        RemainAfterExit=yes
+        EnvironmentFile=/etc/environment
+        ExecStartPre=-/usr/bin/docker rm -f borgboot
+        ExecStart=/usr/bin/docker run \
+            --privileged=true \
+            -e HOST_IP=${COREOS_PUBLIC_IPV4} \
+            -e APP_NAME=borgboot \
+            -e APP_ROLE=default \
+            -e APP_REVISION=be43ca0a1ee21af373985e20c452dba64727400d \
+            -e SERVICE_INDEX=1 \
+            --name=borgboot \
+            --net=host \
+            registry.borg.chi.shopify.com:5000/borgboot:be43ca0a1ee21af373985e20c452dba64727400d
+
+        [Install]
+        WantedBy=multi-user.target
+
+# Environment customizations for etcd
+write_files:
+  - path: /etc/fleet/fleet.conf
+    content: |
+      etcd_servers=["http://etcd1.chi.shopify.com:4001","http://etcd2.chi.shopify.com:4001","http://etcd3.chi.shopify.com:4001","http://etcd4.chi.shopify.com:4001"]
+  - path: /etc/profile.d/shopify_env.sh
+    permissions: 0755
+    content: |
+      #!/bin/bash
+      export ETCDCTL_PEERS=http://etcd1.chi.shopify.com:4001
+      export FLEETCTL_ENDPOINT=http://etcd1.chi.shopify.com:4001
+      alias nsenter="nsenter --mount --uts --ipc --net --pid"
+
+
+# Allow all deploy users can connect as the 'core' user
+ssh_authorized_keys:
+<% opts['deploy_users'].each do |user, key| %>
+  <% next unless key %>
+  <% key.lines.each do |line| %>
+  - <%= line %>
+  <% end %>
+<% end %>
+
+# Create a Chaos user for use in automatic restart of services
+users:
+  - name: chaos
+    passwd: $6FMi11BJFsAc
+    homedir: /home/chaos
+    groups:
+      - sudo
+      - docker
+    ssh-authorized-keys:
+<% opts['chaos_users'].each do |user, key| %>
+  <% next unless key %>
+  <% key.lines.each do |line| %>
+      - <%= line %>
+  <% end %>
+<% end %>

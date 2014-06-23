@@ -7,8 +7,6 @@ end
 
 # Upstream
 require 'eventmachine'
-require 'sinatra'
-require 'sinatra/config_file'
 require 'thin'
 require 'data_mapper'
 
@@ -17,13 +15,15 @@ require 'spellcaster'
 require 'http'
 
 # We've embedded sinatra inside of eventmachine so we can do background work if we need
-# http://recipes.sinatrarb.com/p/embed/event-machine
+# @see http://recipes.sinatrarb.com/p/embed/event-machine
 class Transmuter
 
+  # Initialize the transmuter from config settings
+  # @param settings sinatra config settings loaded from config file.
   def initialize(settings)
     @settings = settings
 
-    if ENV['UPDATER_ENVIRONMENT'] == "production"
+    if ENV['TRANSMUTER_ENVIRONMENT'] == "production"
       puts 'production'
       db_url = "mysql://#{settings.db['user']}:#{settings.db['password']}@#{settings.db['hostname']}/#{settings.db['dbname']}"
     else
@@ -35,24 +35,23 @@ class Transmuter
     DataMapper.setup :default, db_url 
     DataMapper.finalize
     DataMapper.auto_upgrade!
-
-    @jobs = {}
   end
 
-  def run()
+  # Start the reactor and server
+  def run
 
-    # Start the reactor
     EM.run do
 
-      server     = @settings.main['server']    # 'thin'
-      host       = @settings.main['host']      # '0.0.0.0'
-      port       = @settings.main['port']      # '9000'
+      server     = @settings.main['server'] 
+      host       = @settings.main['host']
+      port       = @settings.main['port']
 
       settings = @settings
 
+      transmuter = TransmuterHTTP.new
       dispatch = Rack::Builder.app do
         map '/' do
-          run TransmuterHTTP.new(settings)
+          run transmuter
         end
       end
 
@@ -61,6 +60,8 @@ class Transmuter
       unless ['thin', 'hatetepe', 'goliath'].include? server
         raise "Need an EM webserver, but #{server} isn't"
       end
+      caster = SpellCaster.new(@settings.main['interval'], transmuter)
+      caster.start
 
       # Start the web server. Note that you are free to run other tasks
       # within your EM instance.
@@ -75,7 +76,7 @@ class Transmuter
     end
   end
 
-  # Needed during testing
+  # Set up signal handlers so that we can properly kill the server.
   def init_sighandlers
     trap(:INT)  {"Got interrupt"; EM.stop(); exit }
     trap(:TERM) {"Got term";      EM.stop(); exit }
@@ -84,16 +85,11 @@ class Transmuter
 
 end
 
-# Load configs
-# To do: clean up log loading
-config = "#{File.join(File.dirname(File.expand_path(__FILE__)),'config','config.yml')}"
+# Load server configs
+server_config = "#{File.join(File.dirname(File.expand_path(__FILE__)),'config','server.yml')}"
 database_config = "#{File.join(File.dirname(File.expand_path(__FILE__)),'config','database.yml')}"
-options_config = "#{File.join(File.dirname(File.expand_path(__FILE__)),'config','options.yml')}"
-secrets_config = "#{File.join(File.dirname(File.expand_path(__FILE__)),'config','secrets.yml')}"
-config_file config
+config_file server_config
 config_file database_config
-config_file options_config
-config_file secrets_config
 
 # Write any log information immediately
 $stdout.sync = true

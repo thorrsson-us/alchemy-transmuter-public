@@ -1,0 +1,4 @@
+menu_txt:   "Select CoreOS channel to boot..."
+menu_sym:   menu-coreos
+menu_key:   o
+menu_class: os

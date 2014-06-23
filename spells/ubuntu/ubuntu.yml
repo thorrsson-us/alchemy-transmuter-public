@@ -1,0 +1,22 @@
+ubuntu:
+  default_swap: 4000
+  isos: 
+    trusty: 
+      name: trusty
+      label: "Install Ubuntu Trusty 14.04"
+      version: '14.04'
+      isoname: ubuntu-14.04-server-amd64.iso
+      baseurl: http://releases.ubuntu.com/14.04/
+      checksum: ababb88a492e08759fddcf4f05e5ccc58ec9d47fa37550d63931d0a5fa4f7388
+      kernel_params: console=tty0 console=ttyS1,115200n8 DEBCONF_DEBUG=5
+      preseed_opts:  {}
+    precise: 
+      name: precise
+      label: "Install Ubuntu Precise 12.04"
+      version: '12.04'
+      isoname: ubuntu-12.04.4-server-amd64.iso
+      baseurl: http://releases.ubuntu.com/12.04/
+      checksum: 61d5e67c70d97b33c13537461a0b153b41304ef412bb0e9d813bb157068c3c65
+      kernel_params: console=tty0 console=ttyS1,115200n8 DEBCONF_DEBUG=5
+      preseed_opts: 
+        base-installer/kernel/image: linux-generic-lts-raring

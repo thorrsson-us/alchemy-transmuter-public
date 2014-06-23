@@ -1,0 +1,10 @@
+#!ipxe
+kernel <%= opts['base_url'] %>/coreos_production_pxe.vmlinuz \
+  console=tty0 \
+  console=ttyS1,115200n8 \
+  coreos.autologin \
+  cloud-config-url=http://${dhcp-server}/spell/render/coreos/cloudconfig
+initrd <%= opts['base_url'] %>/coreos_production_pxe_image.cpio.gz
+boot || goto failed
+goto start
+

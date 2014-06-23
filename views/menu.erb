@@ -2,16 +2,16 @@
 
 
 # Some menu defaults
-set menu-timeout <%= opts['menu_timeout'] %>
+set menu-timeout <%= opts['menu']['menu_timeout'] %>
 set submenu-timeout ${menu-timeout}
 
 # Allow overriding the menu default for automation
-<% if opts.has_key? 'menu_default' %>
-set menu-default  <%= opts['menu_default']  %>
+<% if opts['menu'].has_key? 'menu_default' %>
+set menu-default  <%= opts['menu']['menu_default']  %>
 <% end %>
 
-<% if opts.has_key? 'submenu_default' %>
-set submenu-default <%= opts['submenu_default'] %>
+<% if opts['menu'].has_key? 'submenu_default' %>
+set submenu-default <%= opts['menu']['submenu_default'] %>
 <% end %>
 
 isset ${menu-default} || set menu-default exit
@@ -51,7 +51,8 @@ goto ${selected}
 
 <% spells.each do | spell, data |  %>
 <% if data.has_key? 'menu_class' %>
-<%= partial(:"#{spell}", :opts => opts.update(data)) %>
+
+<%= partial(:"#{spell}", :opts => opts) %>
 <% end %>
 <% end %>
 

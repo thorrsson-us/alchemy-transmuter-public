@@ -1,24 +1,23 @@
 require 'spell'
 require 'asset'
+require 'collins'
 
+# Runs spells that have been queued up
 class SpellCaster
-  $collins = nil
 
-  def initialize(interval, backend, frontend)
-
+  # Set up references to frontend, and interval to poll for spells to cast
+  def initialize(interval, frontend)
     @interval = interval
-    @backend = backend 
     @frontend = frontend 
     @casting = false
-
   end
 
-
+  # Start casting spells
+  # @todo properly handle timeouts and restart spells
   def start
 
     unless @casting
       Spell.all.each do |spell|
-        spell.addBackend(@backend)
         spell.addFrontend(@frontend)
       end
     
@@ -32,11 +31,8 @@ class SpellCaster
 
           spell.updateTimeActive(@interval)
 
-          #TO DO: handle timeouts here
-
           # Cast new spells
           if spell.state < STARTED 
-            spell.addBackend(@backend)
             puts "Casting #{spell.class} on #{spell.sku}"
             spell.updateState( STARTED )
             spell.save                                                     

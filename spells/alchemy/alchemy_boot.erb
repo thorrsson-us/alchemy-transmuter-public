@@ -1,0 +1,10 @@
+#!ipxe
+echo Starting alchemy linux ${initiator-iqn}
+set base-url  http://${dhcp-server}
+kernel ${base-url}/alchemy.img
+initrd ${base-url}/alchemy.ramfs
+imgargs alchemy.img  \
+  <%= if opts.has_key?('kernel_params') then opts['kernel_params'] else "" end %> \
+  <%= if opts.has_key?('callback') then "command_url=${base-url}#{opts['callback']}" else "" end %> \
+  -- console=tty0 console=ttyS1,115200n8
+boot || shell

@@ -1,0 +1,48 @@
+
+:menu-ubuntu
+menu Ubuntu preseeds for ${initiator-iqn}
+<% if opts.has_key? 'ubuntu' and opts['ubuntu'].has_key? 'isos' %>
+<% opts['ubuntu']['isos'].each do | iso, data | %>
+    item  ubuntu-<%= iso %>-install <%= data['label'] %> Automatic
+    item  ubuntu-<%= iso %>-install-select-swap <%= data['label'] %> Select Swap
+    item  ubuntu-<%= iso %>-install-select-network <%= data['label'] %> Select Network Interface
+    item  ubuntu-<%= iso %>-install-select-swap-network <%= data['label'] %> Select Swap and Network Interface
+    item  ubuntu-<%= iso %>-install-manual <%= data['label'] %> Manual Install
+<% end %>
+<% end %>
+item
+item --key 0x08 back      Back to top menu...
+iseq ${menu-default} menu-ubuntu && isset ${submenu-default} && goto menu-ubuntu-timed ||
+choose selected && goto ${selected} || goto start
+
+
+<% if opts.has_key? 'ubuntu' and opts['ubuntu'].has_key? 'isos' %>
+<% opts['ubuntu']['isos'].each do | iso, _ | %>
+
+:ubuntu-<%= iso %>-install
+chain --replace --autofree  http://${dhcp-server}/spell/render/ubuntu/boot?sku=<%= opts['sku'] %>&iso=<%= iso %>&mac=${mac}
+
+:ubuntu-<%= iso %>-install-select-swap
+echo -n Enter a swap value (in MB): && read swapsize
+chain --replace --autofree  http://${dhcp-server}/spell/render/ubuntu/boot?sku=<%= opts['sku'] %>&iso=<%= iso %>&mac=${mac}&swapsize=${swapsize}
+
+:ubuntu-<%= iso %>-install-select-network
+chain --replace --autofree  http://${dhcp-server}/spell/render/ubuntu/boot?sku=<%= opts['sku'] %>&iso=<%= iso %>&mac=${mac}&netinterface=manual
+
+:ubuntu-<%= iso %>-install-select-swap
+echo -n Enter a swap value (in MB): && read swapsize
+chain --replace --autofree  http://${dhcp-server}/spell/render/ubuntu/boot?sku=<%= opts['sku'] %>&iso=<%= iso %>&mac=${mac}&swapsize=${swapsize}&netinterface=manual
+
+:ubuntu-<%= iso %>-install-manual
+echo Starting Ubuntu <%= iso['version'] %> ${archl} manual install for ${initiator-iqn}
+set base-url http://${dhcp-server}/ubuntu/<%= iso['name'] %>
+kernel ${base-url}/install/netboot/ubuntu-installer/${archl}/linux
+initrd ${base-url}/install/netboot/ubuntu-installer/${archl}/initrd.gz
+imgargs linux \
+  tasks=standard  \
+  -- console=tty0 console=ttyS1,115200n8
+boot || goto failed
+goto start
+
+<% end %>
+<% end %>
